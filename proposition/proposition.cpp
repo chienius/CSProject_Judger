@@ -48,7 +48,7 @@ createAnsPool (int question_classID, int question_subID, string question_query, 
         count ++;
     }
     std::cout << count << " results in all." << std::endl;
-    std::cout << "Inserting results to the proposition colle..." << std:: endl;
+    std::cout << "Inserting results to the `jj_questions` collection..." << std:: endl;
 
     /* ## Insert results ## */
 
@@ -89,7 +89,7 @@ main ( int argc, char *argv[] )
         string query, title;
     };
 
-    Question q[45] = {
+    Question q[46] = {
         {1, 1, "{ name: /^.{3}$/ }", "你的名字是三个字的吗？"},
 
         {2, 1, "{ hometown: { $in: [\"北京\", \"天津\", \"河北\", \"山西\", \"内蒙古\"] } }", "你的家乡在华北吗？"},
@@ -143,8 +143,9 @@ main ( int argc, char *argv[] )
         {10, 7, "{ $where : \"this._id%10 == 7\" }", "你的学号尾号是 7 吗？"},
         {10, 8, "{ $where : \"this._id%10 == 8\" }", "你的学号尾号是 8 吗？"},
         {10, 9, "{ $where : \"this._id%10 == 9\" }", "你的学号尾号是 9 吗？"},
-        {10, 10, "{ $where : \"this._id%10 == 0\" }", "你的学号尾号是 0 吗？"}
+        {10, 10, "{ $where : \"this._id%10 == 0\" }", "你的学号尾号是 0 吗？"},
 
+        {11, 1, "{ $where: \"/^1/i.test(this.room+'')\" }", "你住在宿舍二楼吗？"}
     };
 
     int i;
