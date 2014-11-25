@@ -82,7 +82,7 @@ createAnsPool (int question_classID, int question_subID, string question_query, 
  * =====================================================================================
  */
     int
-main ( int argc, char *argv[] )
+main ()
 {
     struct Question {
         int classID, subID;
