@@ -45,6 +45,7 @@ createAnsPool (int question_classID, int question_subID, string question_query, 
     while ( cursor -> more() ){
         BSONObj p = cursor -> next();
         result[count] = p.getIntField("_id");
+        cout << p.getIntField("_id") << endl;
         count ++;
     }
     std::cout << count << " results in all." << std::endl;
@@ -110,7 +111,7 @@ main ()
         {6, 2, "{ $where: \"parseFloat((this.citizen_id+'').substr(10, 4)) >= 421 && parseFloat((this.citizen_id+'').substr(10, 4)) <= 520 \" }", "你的星座是 金牛座 吗？"},
         {6, 3, "{ $where: \"parseFloat((this.citizen_id+'').substr(10, 4)) >= 521 && parseFloat((this.citizen_id+'').substr(10, 4)) <= 621 \" }", "你的星座是 双子座 吗？"},
         {6, 4, "{ $where: \"parseFloat((this.citizen_id+'').substr(10, 4)) >= 622 && parseFloat((this.citizen_id+'').substr(10, 4)) <= 722 \" }", "你的星座是 巨蟹座 吗？"},
-        {6, 5, "{ $where: \"parsefloat((this.citizen_id+'').substr(10, 4)) >= 723 && parsefloat((this.citizen_id+'').substr(10, 4)) <= 822 \" }", "你的星座是 狮子座 吗？"},
+        {6, 5, "{ $where: \"parseFloat((this.citizen_id+'').substr(10, 4)) >= 723 && parseFloat((this.citizen_id+'').substr(10, 4)) <= 822 \" }", "你的星座是 狮子座 吗？"},
         {6, 6, "{ $where: \"parseFloat((this.citizen_id+'').substr(10, 4)) >= 823 && parseFloat((this.citizen_id+'').substr(10, 4)) <= 922 \" }", "你的星座是 处女座 吗？"},
         {6, 7, "{ $where: \"parseFloat((this.citizen_id+'').substr(10, 4)) >= 923 && parseFloat((this.citizen_id+'').substr(10, 4)) <= 1022 \" }", "你的星座是 天秤座 吗？"},
         {6, 8, "{ $where: \"parseFloat((this.citizen_id+'').substr(10, 4)) >= 1023 && parseFloat((this.citizen_id+'').substr(10, 4)) <= 1121 \" }", "你的星座是 天蝎座 吗？"},

@@ -97,7 +97,7 @@ Questions  题目
 
     5. 你的星座是 狮子座 吗？
 
-        >> { $where: "parsefloat((this.citizen_id+'').substr(10, 4)) >= 723 && parsefloat((this.citizen_id+'').substr(10, 4)) <= 822 " }
+        >> { $where: "parseFloat((this.citizen_id+'').substr(10, 4)) >= 723 && parsefloat((this.citizen_id+'').substr(10, 4)) <= 822 " }
 
         count: 12
 
