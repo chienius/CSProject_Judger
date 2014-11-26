@@ -169,10 +169,18 @@ postAns ( Question cur_question, bool ans )
         second_ranker.id = b_ranker.getIntField("stuid");
     }
 
-    cout << "[TOP]" <<top_ranker.id << " [UPCOMMING]" << second_ranker.id << endl;
+    //cout << "[TOP]" <<top_ranker.id << " [UPCOMMING]" << second_ranker.id << endl;
     if( top_ranker.points - second_ranker.points >= 10 )
     {
-        cout << top_ranker.id << endl;
+        system("clear");
+        cout << "我猜你是: ";
+        cout << top_ranker.id << " - " << c.query( "studb.stuinfo", BSON( "_id" << top_ranker.id ) )->next().getStringField("name") << endl;
+        puts("------------------------------------");
+        cout << "以下同学和你特征相近：" << endl;
+        cout << second_ranker.id << " - " << c.query( "studb.stuinfo", BSON( "_id" << second_ranker.id ) )->next().getStringField("name") << endl;
+        cout << q->next().getIntField("stuid") << " - " << c.query( "studb.stuinfo", BSON( "_id" << q->next().getIntField("stuid") ) )->next().getStringField("name") << endl;
+        cout << q->next().getIntField("stuid") << " - " << c.query( "studb.stuinfo", BSON( "_id" << q->next().getIntField("stuid") ) )->next().getStringField("name") << endl;
+        puts("------------------------------------");
         return 1;
     }
 
