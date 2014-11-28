@@ -265,7 +265,7 @@ main ()
             auto_ptr<DBClientCursor> q = c.query( "studb.jj_instance_answer_pool", Query(BSONObj()).sort("points", -1)  );
             BSONObj b;
             int j=0;
-            while( q->more() && j<3 )
+            while( q->more() && j<5 )
             {
                 b =  q->next();
                 cout << "\t\t" << b.getIntField("stuid") << " - " << c.query( "studb.stuinfo", BSON( "_id" << b.getIntField("stuid") ) )->next().getStringField("name") << endl;
