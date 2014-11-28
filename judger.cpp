@@ -38,9 +38,9 @@ struct Question
     Question
 chkOutQuestion ()
 {
-    int used_questions_id[50][2] = {{0}};
-    int ready_questions[50][2] = {{0}};
-    Question question_ready;
+    int used_questions_id[200][2] = {{0}};
+    int ready_questions[200][2] = {{0}};
+    Question question_ready = {0, 0, ""};
     auto_ptr<DBClientCursor> cursor = c.query( "studb.jj_instance_questions", BSONObj() );
 
     //Get all used questions
@@ -84,14 +84,17 @@ chkOutQuestion ()
         i++;
     }
 
+
     //Get a random question
     srand(time(0));
     int rand_question_count;
     if(i)
         rand_question_count = rand()%i;
     else
-        rand_question_count = 0;
-
+    {
+        return question_ready;
+    }
+        
     question_ready.classID = ready_questions[rand_question_count][0];
     question_ready.subID = ready_questions[rand_question_count][1];
 
@@ -185,22 +188,30 @@ postAns ( Question cur_question, bool ans )
     }
 
     //Cast cur question into instance_questions
-    if ( ans )
+    /* if ( ans ) */
+    /* { */
+    /*     q = c.query ( "studb.jj_questions", BSON( "classID" << cur_question.classID ) ); */
+    /*     BSONObj qbn; */
+    /*     while(q->more()) */
+    /*     { */
+    /*         qbn = q->next(); */
+    /*         if( ! c.query( "studb.jj_instance_questions", BSON( "classID" << cur_question.classID << "subID" << qbn.getIntField("subID") ))->more() ) */
+    /*             c.insert( "studb.jj_instance_questions", BSON( "classID" << cur_question.classID << "subID" << qbn.getIntField("subID") ) ); */ 
+    /*     } */
+    /* } */
+    /* else */
+    /* { */
+    /*     if( ! c.query( "studb.jj_instance_questions", BSON( "classID" << cur_question.classID << "subID" << cur_question.subID ) )->more() ) */
+    /*         c.insert( "studb.jj_instance_questions", BSON( "classID" << cur_question.classID << "subID" << cur_question.subID ) ); */ 
+    /* } */
+
+    q = c.query ( "studb.jj_questions", BSON( "classID" << cur_question.classID ) );
+    BSONObj qbn;
+    while(q->more())
     {
-        q = c.query ( "studb.jj_questions", BSON( "classID" << cur_question.classID ) );
-        BSONObj qbn;
-        while(q->more())
-        {
-            qbn = q->next();
-            if( ! c.query( "studb.jj_instance_questions", BSON( "classID" << cur_question.classID << "subID" << qbn.getIntField("subID") ))->more() )
-                c.insert( "studb.jj_instance_questions", BSON( "classID" << cur_question.classID << "subID" << qbn.getIntField("subID") ) ); 
-        }
-    }
-    else
-    {
-        //q = c.query ( "studb.jj_questions", BSON( "classID" << cur_question.classID ) );
-        if( ! c.query( "studb.jj_instance_questions", BSON( "classID" << cur_question.classID << "subID" << cur_question.subID ) )->more() )
-            c.insert( "studb.jj_instance_questions", BSON( "classID" << cur_question.classID << "subID" << cur_question.subID ) ); 
+        qbn = q->next();
+        if( ! c.query( "studb.jj_instance_questions", BSON( "classID" << cur_question.classID << "subID" << qbn.getIntField("subID") ))->more() )
+            c.insert( "studb.jj_instance_questions", BSON( "classID" << cur_question.classID << "subID" << qbn.getIntField("subID") ) ); 
     }
 
     return 0;
@@ -217,7 +228,7 @@ postAns ( Question cur_question, bool ans )
 main ()
 {
     c.connect("localhost");
-    std::cout << "connected." << endl;
+    cout << "connected." << endl;
 
     // Drop all the instance db collections
     c.DBClientWithCommands::dropCollection( "studb.jj_instance_questions" );
@@ -226,7 +237,7 @@ main ()
     auto_ptr<DBClientCursor> p = c.query( "studb.stuinfo", BSONObj() );
     while(p->more())
     {
-        c.insert("studb.jj_instance_answer_pool", BSON("stuid" << p->next().getIntField("_id")));
+        c.insert("studb.jj_instance_answer_pool", BSON("stuid" << p->next().getIntField("_id") << "points" << 0 ));
     }
 
 
@@ -238,11 +249,30 @@ main ()
     {
         question = chkOutQuestion();
         system("clear");
-        cout << "Jundger | 判官" << endl;
-        puts("");
-        cout << "\t\tQ" << i << ". " << question.title << endl;
-        cout << "\t\t" << "Y. 是" << "        " << "N. 否" << endl;
-        cout << "\t\t" << "请作答： ";
+        if( question.classID )
+        {
+            cout << "Judger | 判官" << endl;
+            puts("");
+            cout << "\t\tQ" << i << ". " << question.title << endl;
+            cout << "\t\t" << "Y. 是" << "        " << "N. 否" << endl;
+            cout << "\t\t" << "请作答： ";
+        }
+        else
+        {
+            cout << "Judger | 判官" << endl;
+            puts("");
+            cout << "\t\t" << "对不起，我猜不出你是谁，但是我认为你很可能是这些人中的一个：" << endl;
+            auto_ptr<DBClientCursor> q = c.query( "studb.jj_instance_answer_pool", Query(BSONObj()).sort("points", -1)  );
+            BSONObj b;
+            int j=0;
+            while( q->more() && j<3 )
+            {
+                b =  q->next();
+                cout << "\t\t" << b.getIntField("stuid") << " - " << c.query( "studb.stuinfo", BSON( "_id" << b.getIntField("stuid") ) )->next().getStringField("name") << endl;
+                j++;
+            }
+            return EXIT_SUCCESS;
+        }
 
         while(true)
         {
