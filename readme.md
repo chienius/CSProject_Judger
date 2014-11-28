@@ -12,3 +12,11 @@ The programme is a database appliance homework project of course [CS100383][http
 本程序基于 `mongoDB` 和 `C++` 开发，`include` 文件夹内包含的文件是 Linux 平台上编译的 mongoDB 的官方 C++ 驱动，请在尝试编译本程序前将其替换为您的平台的 mongoDB 驱动。
 
 本程序是 [CS100383][http://cs.tongji.edu.cn/~junqiao/CS100383.php] 课程的一项数据库应用作业项目，并且其完全开源。
+
+
+Sample data for mongoDB
+-----------------------
+
+`mongo_studb.stuinfo.json` is a sample datum for judger, you can generate some sample data like the form in this file.
+
+The database name should be `studb`.
