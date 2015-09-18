@@ -20,3 +20,8 @@ Sample data for mongoDB
 `mongo_studb.stuinfo.json` is a sample datum for judger, you can generate some sample data like the form in this file.
 
 The database name should be `studb`.
+
+FYI
+----
+
+This is a database manipulation project that I've created in 2014. To know more about this project, see this [demo](http://cs.tongji.edu.cn/~junqiao/miscellaneous/CS100383/2014Fall/Selected_projects/Class01/Proj4/judger_group8.zip). Also, this project has been chosen as a selected project of CS100383. For more information, please visit [CS100383 Tongji University](http://cs.tongji.edu.cn/~junqiao/CS100383.php)
