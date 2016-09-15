@@ -1,9 +1,9 @@
 Judger     判官
 ===============
 
-This appliance will give the users some questions to solve, and guess who the user is. 
+This application will give the users some questions to solve, and guess who the user is. 
 
-The appliance is based on `mongoDB` & `C++`, files in `include` directory is the official mongoDB C++ driver built on Linux, please replace it with the driver of your own platform.
+The application is based on `mongoDB` & `C++`, files in `include` directory is the official mongoDB C++ driver built on Linux, please replace it with the driver of your own platform.
 
 The programme is a database appliance homework project of course [CS100383](http://cs.tongji.edu.cn/~junqiao/CS100383.php), and it is fully open source.
 
