@@ -5,7 +5,7 @@ This application will give the users some questions to solve, and guess who the 
 
 The application is based on `mongoDB` & `C++`, files in `include` directory is the official mongoDB C++ driver built on Linux, please replace it with the driver of your own platform.
 
-The programme is a database appliance homework project of course [CS100383](http://cs.tongji.edu.cn/~junqiao/CS100383.php), and it is fully open source.
+The programme is a database application homework project of course [CS100383](http://cs.tongji.edu.cn/~junqiao/CS100383.php), and it is fully open source.
 
 判官程序会给提用户几个问题，根据用户的回答来猜测该名用户是谁。
 
